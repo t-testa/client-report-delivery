@@ -1,0 +1,5 @@
+pandas>=2.0
+duckdb>=1.0
+pyyaml>=6.0
+pytest>=8.0
+anthropic>=0.40  # optional: Claude rewrites notes when an API key is set
