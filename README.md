@@ -1,5 +1,7 @@
 # Client Report Delivery
 
+> **Repository status:** this checkout is incomplete. The runner imports `delivery.notes` and `delivery.pipeline`, but the `delivery/`, `clients/`, `sql/` and `tests/` directories are missing from the default branch. The documented results below describe the project, but cannot currently be reproduced from this checkout. Recover those original files before running the pipeline or treating this as a complete demo.
+
 **Recurring billing extracts for enterprise clients, each in the format their own system requires, with a reconciliation gate that blocks any file that doesn't account for every dollar.**
 
 Large clients of a services marketplace don't want a dashboard. They want a file that drops into *their* system every month: a LEDES e-billing invoice for one law firm, a CSV in another firm's case-management import template, a JSON payload for an insurer's accounting system. Each has its own rules. One rejects lines without a matter number; another pays court fees directly and must never be billed for them.
@@ -25,7 +27,7 @@ warehouse (line_items, jobs, clients)
                  fail → blocked, never sent, with the missing line IDs and a diagnosis
 ```
 
-![dashboard](docs/dashboard.png)
+The dashboard screenshot is not included in this checkout.
 
 ## Results on the synthetic data
 
@@ -62,14 +64,14 @@ Each client is one file, `clients/<client>/delivery.yaml`. Adding a client or ch
 
 **Separate what the client needs to do from what we need to fix.** The note for each delivery splits held lines into a message the account manager can send ("reply with the matter number for these jobs") and an internal list for billing ops (amount errors the client should never see). Every figure in a note is checked against the run's numbers before it's written; Claude can polish the wording when an API key is set, and its draft is rejected if it changes any figure.
 
-## Run it
+## Intended run sequence (blocked by missing source files)
 
 ```bash
 pip install -r requirements.txt
 python generate_data.py      # synthetic warehouse: clients, jobs, line items
 python run.py                # 18 deliveries → output/outbox, output/blocked, logs, notes
 python build_dashboard.py    # output/dashboard.html
-pytest -q                    # 9 tests
+pytest -q                    # requires the missing test suite
 ```
 
 ## Layout
